@@ -66,7 +66,7 @@ for (i in 1:length(shps)){
   }
 
 
-  intro_del <- paste0("DELETE FROM shapes WHERE shape_id ='",Linha$shape_id,"';")
+  intro_del <- paste0("DELETE FROM shapes WHERE shape_id ='",linha_ver$shape_id,"';")
   if (is.na(linha_ver$TripID)){
     intro <- "INSERT INTO shapes(shape_id, shape_pt_lat, shape_pt_lon, shape_pt_sequence, shape_dist_traveled) VALUES "
   } else {
