@@ -110,7 +110,7 @@ for (i in 1:length(shps)){
 
 write.table(geral, paste0("D:/WKTs/shapes_para_correcao/geral.txt"), row.names = F, col.names = F, quote = F)
 
-geral_split <- split(geral,rep(1:ceiling(nrow(geral)/3000),each=3000))
+geral_split <- split(geral,rep(1:ceiling(nrow(geral)/7000),each=7000))
 
 for(i in 1:length(geral_split)){
   write.table(geral_split[[i]], paste0("D:/WKTs/shapes_para_correcao/geral-",i, ".txt"), row.names = F, col.names = F, quote = F)
@@ -118,3 +118,4 @@ for(i in 1:length(geral_split)){
 write.table(del, paste0("D:/WKTs/shapes_para_correcao/del.txt"), row.names = F, col.names = F, quote = F)
 
 rm(geral,geral_split,del)
+
