@@ -9,6 +9,8 @@ source("./codigos/gtfs_rio_funcoes.R")
 
 pegarDadoSIGMOB("stops")
 
+bairro <- "Urca"
+
 bairro <- "Botafogo"
 
 stops_bairro <- stops %>%
@@ -23,8 +25,12 @@ end_geo <- paste0("D:/Edificacoes_2013/bairros/",bairro,"/paradas_onibus_",bairr
 
 st_write(stops_bairro_geo,end_geo, append = F)
 
+####################
+
 paradas_proc <- as.data.table(st_read(end_geo)) %>%
-  mutate(stop_name = case_when(IDPropriedadeParada == "2" ~ paste0("Ponto Final: ",name),
+  filter(!is.na(name)) %>%
+  mutate(BRS = ifelse(!exists("BRS"),NA,BRS),
+         stop_name = case_when(IDPropriedadeParada == "2" ~ paste0("Ponto Final: ",name),
                                IDPropriedadeParada == "3" ~ paste0("Ponto Regulador: ",name),
                                IDTipoParada == "6" ~ paste0("BRS ",BRS,": ",name),
                                TRUE ~ name)) %>%
@@ -41,4 +47,3 @@ paradas_proc$texto <- apply( paradas_proc[ , ..cols ] , 1 , paste , collapse = "
 paradas_proc <- as.data.table(paradas_proc$texto)
 
 write.table(paradas_proc, paste0("D:/Edificacoes_2013/bairros/",bairro,"/paradas_onibus_",bairro,".txt"), row.names = F, col.names = F, quote = F)
-
